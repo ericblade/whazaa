@@ -1,3 +1,4 @@
+
 var ProtocolTreeNode = Class.create({
     initialize: function(tag, attributes, children, data) {
         this.tag = tag;

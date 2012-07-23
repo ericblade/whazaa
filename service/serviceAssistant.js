@@ -400,7 +400,7 @@ function pack (format) {
     return result;
 }
 
-require('./waAPI.js');
+require('./waAPINew.js');
 
 function array_shift (inputArr) {
     // Pops an element off the beginning of the array  
