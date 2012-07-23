@@ -1,0 +1,11 @@
+{
+    "id": "com.ericblade.whazaa",
+    "package_format_version": 2,
+    "loc_name": "Whazaa",
+    "version": "1.0.0",
+    "vendor": "Eric Blade",
+    "vendorurl": "http://www.ericbla.de/",
+    "app": "com.ericblade.whazaa",
+    "services": [ "com.ericblade.whazaa.service" ],
+    "accounts": [ "com.ericblade.whazaa.account" ]
+}
