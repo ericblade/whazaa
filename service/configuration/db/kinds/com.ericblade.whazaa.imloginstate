@@ -1,0 +1,6 @@
+{
+        "id": "com.ericblade.whazaa.imloginstate:1",
+        "extends": [
+                "com.palm.loginstate:1" 
+        ]
+}

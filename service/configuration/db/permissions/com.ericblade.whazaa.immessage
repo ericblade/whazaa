@@ -1,0 +1,24 @@
+[
+    {
+        "type": "db.kind",
+        "object": "com.ericblade.whazaa.immessage:1",
+        "caller": "com.ericblade.*",
+        "operations": {
+            "read": "allow",
+            "create": "allow",
+            "update": "allow",
+            "delete": "allow"
+        }
+    },
+    {
+        "type": "db.kind",
+        "object": "com.ericblade.whazaa.immessage:1",
+        "caller": "com.palm.*",
+        "operations": {
+            "read": "allow",
+            "create": "allow",
+            "update": "allow",
+            "delete": "allow"
+        }
+    }
+]

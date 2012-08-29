@@ -1,39 +1,68 @@
 {
-    "templateId"            : "com.ericblade.whazaa.account",
-    "loc_name"              : "Whazaa",
-    "hidden"                : false,
-    "invisible"             : false,
-    "icon"                  : { "loc_32x32": "images/gvoice32.png", "loc_48x48": "images/gvoice48.png", "splitter": "images/gvoice32.png" },
-    "readPermissions"       : [ "com.ericblade.whazaa", "com.palm.app.messaging", "com.palm.app.phone" ],
-    "writePermissions"      : [ "com.ericblade.whazaa", "com.palm.app.messaging", "com.palm.app.phone" ],
-    "validator"		    : "palm://com.ericblade.whazaa.service/checkCredentials",
-    "capabilityProviders"   : [
-                                { "id":"com.ericblade.whazaa.account.im",
-                                  "alwaysOn": false,
-                                  "sync": "palm://com.ericblade.whazaa.service/sync",
-                                  "loc_name": "Whazaa",
-                                  "loc_shortName": "Whazaa",
-                                  "capability":"MESSAGING",
-                                  "capabilitySubtype": "IM",
-                                  "serviceName":"type_whatsapp",
-                                  "supportsInvisibleStatus": false,
-                                  "implementation": "palm://com.ericblade.whazaa.service/",
-								  "onCreate": "palm://com.ericblade.whazaa.service/onCreate",
-                                  "onEnabled": "palm://com.ericblade.whazaa.service/onEnabled",
-								  "onDelete": "palm://com.ericblade.whazaa.service/onDelete",
-                                  "onCredentialsChanged": "palm://com.ericblade.whazaa.service/onCredentialsChanged",
-                                  "onCapabilitiesChanged": "palm://com.ericblade.whazaa.service/onCapabilitiesChanged",
-                                  "loginStateChanged": "palm://com.ericblade.whazaa.service/loginStateChanged",
-                                  "sendIM": "palm://com.ericblade.whazaa.service/sendIM",
-                                  "sendCommand": "palm://com.ericblade.whazaa.service/sendCommand",
-                                  "chatWithNonBuddies": true,
-                                  "readOnlyData": false,
-                                  "icon": { "loc_32x32": "images/gvoice32.png", "loc_48x48": "images/gvoice48.png", "splitter": "images/gvoice32.png" },
-                                  "dbkinds": {
-                                    "immessage": "com.ericblade.whazaa.immessage:1",
-                                    "imloginstate": "com.ericblade.whazaa.loginstate:1",
-                                    "imcommand": "com.ericblade.whazaa.imcommand:1"
-                                  }
-                                }
-                               ]
+    "templateId": "com.ericblade.whazaa.account",
+    "loc_name": "Whazaa",
+    "hidden": false,
+    "invisible": false,
+    "icon": {
+        "loc_32x32": "images/gvoice32.png",
+        "loc_48x48": "images/gvoice48.png",
+        "splitter": "images/gvoice32.png"
+    },
+    "readPermissions": [
+        "com.ericblade.whazaa",
+        "com.palm.app.messaging",
+        "com.palm.app.phone",
+		"com.palm.service.contacts.linker",
+		"com.palm.whazaacontacts"
+    ],
+    "writePermissions": [
+        "com.ericblade.whazaa",
+        "com.palm.app.messaging",
+        "com.palm.app.phone",
+		"com.palm.app.contacts",
+		"com.palm.whazaacontacts"
+    ],
+    "validator": "palm://com.ericblade.whazaa.service/checkCredentials",
+    "capabilityProviders": [
+        {
+            "id": "com.ericblade.whazaa.account.im",
+            "alwaysOn": false,
+            "sync": "palm://com.ericblade.whazaa.service/sync",
+            "loc_name": "Whazaa",
+            "loc_shortName": "Whazaa",
+            "capability": "MESSAGING",
+            "capabilitySubtype": "IM",
+            "serviceName": "type_whazaa",
+            "supportsInvisibleStatus": false,
+            "implementation": "palm://com.ericblade.whazaa.service/",
+            "onCreate": "palm://com.ericblade.whazaa.service/onCreate",
+            "onEnabled": "palm://com.ericblade.whazaa.service/onEnabled",
+            "onDelete": "palm://com.ericblade.whazaa.service/onDelete",
+            "onCredentialsChanged": "palm://com.ericblade.whazaa.service/onCredentialsChanged",
+            "onCapabilitiesChanged": "palm://com.ericblade.whazaa.service/onCapabilitiesChanged",
+            "loginStateChanged": "palm://com.ericblade.whazaa.service/loginStateChanged",
+            "sendIM": "palm://com.ericblade.whazaa.service/sendIM",
+            "sendCommand": "palm://com.ericblade.whazaa.service/sendCommand",
+            "chatWithNonBuddies": true,
+            "readOnlyData": false,
+            "icon": {
+                "loc_32x32": "images/gvoice32.png",
+                "loc_48x48": "images/gvoice48.png",
+                "splitter": "images/gvoice32.png"
+            },
+            "dbkinds": {
+                "immessage": "com.ericblade.whazaa.immessage:1",
+                "imloginstate": "com.ericblade.whazaa.imloginstate:1",
+                "imcommand": "com.ericblade.whazaa.imcommand:1"
+            }
+        },
+		{
+			"id": "com.ericblade.whazaa.account.contacts",
+			"capability": "CONTACTS",
+			"sync": "palm://com.ericblade.whazaa.service/sync",
+			"dbkinds": {
+				"contact": "com.ericblade.whazaa.contact:1"
+			}
+		}
+    ]
 }

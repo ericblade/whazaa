@@ -1,0 +1,18 @@
+{
+    "id": "com.ericblade.whazaa.contact:1",
+    "extends": [
+        "com.palm.contact:1"
+    ],
+    "indexes":
+    [
+        {
+            "name": "remoteId",
+            "props": [
+                {
+                    "name": "remoteId"
+                }
+            ]  
+        }
+    ]
+    
+}

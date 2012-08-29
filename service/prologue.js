@@ -34,7 +34,7 @@ ServiceError.prototype = new Error();
 ServiceError.prototype.name = "ServiceError";
 
 // Begin whazaa specific requirements
-tls = require('net');
+/*tls = require('net');
 
 var base64 = {};
 
@@ -338,7 +338,7 @@ function pack (format) {
                     ++k;
                 } else {
                     if (exp < minExp) {
-                        if (exp !== bias + 1 - len && exp < minUnnormExp) { /*"encodeFloat::float underflow" */
+                        if (exp !== bias + 1 - len && exp < minUnnormExp) { 
                         }
                         k = bias + 1 - (exp = minExp - 1);
                     }
@@ -472,3 +472,4 @@ function array_shift (inputArr) {
         return inputArr.shift();
     }
 }
+*/

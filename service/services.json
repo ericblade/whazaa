@@ -1,27 +1,101 @@
 {
-    "id":"com.ericblade.whazaa.service",
-    "description":"Whazaa Service",
-    "engine":"node",
-    "activityTimeout":30,
-    "services" :
-    [
-        { 
-            "name":"com.ericblade.synergy.service",
-            "description": "Synergy Service",
-            "globalized": false,
+    "id": "com.ericblade.whazaa.service",
+    "description": "Whazaa Service",
+    "engine": "node",
+    "activityTimeout": 30,
+    "services": [
+        {
+            "name": "com.ericblade.whazaa.service",
+            "description": "Whazaa! Service",
             "assistant": "serviceAssistant",
-            "commands":
-            [
-                { "name":"checkCredentials", "assistant":"checkCredentials", "public": true },
-                { "name": "onCreate", "assistant": "onCreate", "public": true },
-                { "name": "onDelete", "assistant": "onDelete", "public": true },
-                { "name": "onCapabilitiesChanged", "assistant": "onCapabilitiesChanged", "public": true },
-                { "name": "onEnabled", "assistant": "onEnabled", "public": true },
-                { "name": "sync", "assistant": "sync", "public": true },
-                { "name": "onCredentialsChanged", "assistant": "onCredentialsChanged", "public": true },
-                { "name": "loginStateChanged", "assistant": "loginStateChanged", "public": true },
-                { "name": "sendIM", "assistant": "sendIM", "public": true },
-                { "name": "sendCommand", "assistant": "sendCommands", "public": true }
+            "globalized": false,
+            "commands": [
+                {
+                    "name": "checkCredentials",
+                    "assistant": "checkCredentials",
+                    "public": true
+                },
+                {
+                    "name": "onCreate",
+                    "assistant": "onCreate",
+                    "public": true
+                },
+                {
+                    "name": "onDelete",
+                    "assistant": "onDelete",
+                    "public": true
+                },
+                {
+                    "name": "onCapabilitiesChanged",
+                    "assistant": "onCapabilitiesChanged",
+                    "public": true
+                },
+                {
+                    "name": "onEnabled",
+                    "assistant": "onEnabled",
+                    "public": true
+                },
+                {
+                    "name": "sync",
+                    "assistant": "sync",
+                    "public": true
+                },
+                {
+                    "name": "onCredentialsChanged",
+                    "assistant": "onCredentialsChanged",
+                    "public": true
+                },
+                {
+                    "name": "loginStateChanged",
+                    "assistant": "loginStateChanged",
+                    "public": true
+                },
+                {
+                    "name": "sendIM",
+                    "assistant": "sendIM",
+                    "public": true
+                },
+                {
+                    "name": "sendCommand",
+                    "assistant": "sendCommands",
+                    "public": true
+                },
+                {
+                    "name": "beginSession",
+                    "assistant": "beginSession",
+                    "public": true,
+                    "subscribe": true
+                },
+                {
+                    "name": "serverPing",
+                    "assistant": "serverPing",
+                    "public": true
+                },
+                {
+                    "name": "getRegistrationCode",
+                    "assistant": "getRegistrationCode",
+                    "public": true
+                },
+                {
+                    "name": "registerCode",
+                    "assistant": "registerCode",
+                    "public": true
+                },
+                {
+                    "name": "setCustomStatus",
+                    "assistant": "setCustomStatus",
+                    "public": true
+                },
+                {
+                    "name": "addContact",
+                    "assistant": "addContact",
+                    "public": true
+                },
+                {
+                    "name": "getLastOnline",
+                    "assistant": "getLastOnline",
+                    "public": true
+                }
             ]
         }
     ]

@@ -1,10 +1,10 @@
 {
-	"id": "com.ericblade.whazaa",
-	"version": "1.0.0",
-	"vendor": "Eric Blade",
-	"type": "web",
-	"main": "index.html",
-	"title": "Whazaa!",
-	"icon": "icon.png",
-	"uiRevision":2
+    "id": "com.ericblade.whazaa",
+    "version": "1.0.0",
+    "vendor": "Eric Blade",
+    "type": "web",
+    "main": "index.html",
+    "title": "Whazaa!",
+    "icon": "icon.png",
+    "uiRevision": 2
 }
