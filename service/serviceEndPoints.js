@@ -20,8 +20,8 @@ var beginSession = Class.create({
             var f = factory.get();
             f.result = { returnValue: true };
         }, 25000);
-        //var wa = new waApi("19519993267", "134529771563", { debug: false });
-		var wa = new waApi(args.userId, md5(args.password), { debug: false, displayName: args.displayName });
+        //var wa = new waApi("phonenumber", "password", { debug: false });
+		var wa = new waApi(args.userId, md5(args.password), { debug: true, displayName: args.displayName });
         assistant.wa = wa;
         console.log("*** Begin Session, wa = " + wa);
         wa.addListener('message', function receiveMessage(msg) {
@@ -130,6 +130,14 @@ var beginSession = Class.create({
 			var f2 = factory.get();
 			f2.result = { returnValue: false, notAuthorized: true };
 		});
+		wa.addListener('connectionReplaced', function replaced() {
+			var f2 = factory.get();
+			f2.result = { returnValue: false, connectionReplaced: true };
+		});
+		wa.addListener('media', function receivedMedia(data) {
+			var f2 = factory.get();
+			f2.result = { returnValue: true, media: data };
+		});
     }
 });
 
@@ -139,7 +147,7 @@ var sendIM = Class.create({
 		var assistant = this.controller.service.assistant;
         console.log("sendIM run");
         if(!assistant.wa) {
-            var wa = new waApi("19519993267", "134529771563");
+            var wa = new waApi("phonenumber", "password");
             assistant.wa = wa;
         }
         assistant.wa.sendMessageWithBody({ to: args.to, content: args.text });
@@ -215,21 +223,25 @@ var getRegistrationCode = Class.create({
 		var args = this.controller.args;
 		var assistant = this.controller.service.assistant;
 
-		var token = md5("k7Iy3bWARdNeSL8gYgY6WveX12A1g4uTNXrRzt1H" + "c0d4db538579a3016902bf699c16d490acf91ff4" + args["in"]).toLowerCase();
+		var buildHash = "9ad2b9f04958c0bd7a4eef02ca1b62ec65e89138";
+		var waVer = "2.8.2";
+		var waPlatform = "WP7";
+		var waPlatformVer = "7.10.7720";
+		var waDevice = "Device/Nokia-Lumia_900-1.0";
+		
+		var tokenConst = "k7Iy3bWARdNeSL8gYgY6WveX12A1g4uTNXrRzt1H";
+		
+		var token = md5(tokenConst + buildHash + args["in"]).toLowerCase();
+		
 		var options = {
 			host: "r.whatsapp.net",
 			//host: "s.whatsapp.net",
 			port: 443,
 			path: "/v1/code.php?cc=" + args.cc + "&in=" + args["in"] + "&mcc=000&mnc=000&imsi=0&method=sms&token="+token,
-			//path: "/client/iphone/smsproxy.php?to=17342235060&auth=509&in=7342235060&code=1&udid=1234567890",
-			//path: "/client/iphone/smsproxy.php?to=17079925233&in=7342235060&code=1&udid=0e83ff56a12a9cf0c7290cbb08ab6752181fb54b&auth=401",
-			//path: "/v1/code.php?cc=1&token=9fe2a4f90b4acff715d1daf84428bddd&to=17079925233&in=7079925233&lg=en&lc=US&mcc=000&mnc=000&imsi=0&method=sms",
-			method: "GET",
+			//			method: "GET",
 			headers: {
-				//"User-Agent": "WhatsApp/2.8.1504 Android/4.0.2 Device/samsung-Galaxy_Nexus",
-				//"User-Agent": "WhatsApp/2.1.0 S40Version/04.60 Device/nokiac3-00",
-				//"User-Agent": "WhatsApp/2.8.13 S60Version/5.2 Device/C7-00",
-				"User-Agent": "WhatsApp/2.8.0 WP7/7.10.7720 Device/Nokia-Lumia_900-1.0",
+				"User-Agent": "WhatsApp/" + waVer + " " + waPlatform + "/" + waPlatformVer + " " + waDevice,
+				//"User-Agent": "WhatsApp/2.8.0 WP7/7.10.7720 Device/Nokia-Lumia_900-1.0",
 				"Content-Type": "application/x-www-form-urlencoded",
 				"Accept": "text/xml",
 				"Accept-Language": "en-us",
@@ -259,7 +271,8 @@ var registerCode = Class.create({
 			path: "/v1/register.php?cc=" + args.cc + "&in=" + args["in"] + "&udid=" + md5(args.udid) + "&code=" + args.code,
 			method: "GET",
 			headers: {
-				"User-Agent": "WhatsApp/2.8.13 S60Version/5.2 Device/C7-00",
+				//"User-Agent": "WhatsApp/2.8.13 S60Version/5.2 Device/C7-00",
+				"User-Agent": "WhatsApp/2.8.0 WP7/7.10.7720 Device/Nokia-Lumia_900-1.0",
 				"Content-Type": "application/x-www-form-urlencoded",
 				"Accept": "text/xml"
 			}
@@ -281,7 +294,7 @@ var serverPing = Class.create({
 		var assistant = this.controller.service.assistant;
         console.log("sendIM run");
         if(!assistant.wa) {
-            var wa = new waApi("19519993267", "134529771563");
+            var wa = new waApi("phonenumber", "password");
             assistant.wa = wa;
         }
         assistant.wa.sendPing();		
@@ -294,7 +307,7 @@ var sendTyping = Class.create({
 		var assistant = this.controller.service.assistant;
         console.log("sendIM run");
         if(!assistant.wa) {
-            var wa = new waApi("19519993267", "134529771563");
+            var wa = new waApi("phonenumber", "password");
             assistant.wa = wa;
         }
 		assistant.wa.sendTyping("17079925233@s.whatsapp.net");
@@ -307,7 +320,7 @@ var sendPaused = Class.create({
 		var assistant = this.controller.service.assistant;
         console.log("sendIM run");
         if(!assistant.wa) {
-            var wa = new waApi("19519993267", "134529771563");
+            var wa = new waApi("phonenumber", "password");
             assistant.wa = wa;
         }
 		assistant.wa.sendPaused("17079925233@s.whatsapp.net");
@@ -320,7 +333,7 @@ var getLastOnline = Class.create({
 		var assistant = this.controller.service.assistant;
 		console.log("getLastOnline run");
 		if(!assistant.wa) {
-			var wa = new waApi("19519993267", "134529771563");
+			var wa = new waApi("phonenumber", "password");
 			assistant.wa = wa;
 		}
 		// TODO: need to grab google's javascript libphonenumber thing to parse shit with
@@ -332,6 +345,21 @@ var getLastOnline = Class.create({
 		future.result = { returnValue: true };
 	}
 });
+
+var setCustomStatus = Class.create({
+	run: function(future) {
+		var args = this.controller.args;
+		var assistant = this.controller.service.assistant;
+		console.log("setCustomStatus run");
+		if(!assistant.wa) {
+			console.log("whatsapp not running");
+			future.result = { returnValue: false };
+		} else {
+			assistant.wa.sendStatusUpdate(args.status);
+			future.result = { returnValue: true };
+		}
+	}
+})
 
 var checkCredentials = Class.create({
     run: function(future) {

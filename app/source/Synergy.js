@@ -73,6 +73,7 @@ enyo.kind({
 				{ caption: "RegisterView", onclick: "doRegisterView" },
 				{ caption: "MessagingView", onclick: "doMessagingView" },
 				{ caption: "Import Contacts", onclick: "importContacts" },
+				{ caption: "Change Status", onclick: "doStatusView" },
 			]
 		},
 		
@@ -82,6 +83,7 @@ enyo.kind({
 				{ name: "CodeView", kind: "CodeView", onCodeSent: "doRegisterView" },
 				{ name: "RegisterView", kind: "RegisterView", onRegisterSuccess: "doMessagingView" },
 				{ name: "MessagingView", kind: "MessagingView", onCodeView: "doCodeView" },
+				{ name: "StatusView", kind: "StatusView", onMessagingView: "doMessagingView" },
 			]
 		},
 	],
@@ -95,6 +97,9 @@ enyo.kind({
 	},
 	receivedContacts: function(x, y, z) {
 		enyo.application.contacts = y.results;
+	},
+	doStatusView: function() {
+		this.$.MainPane.selectViewByName("StatusView");
 	},
 	doCodeView: function() {
 		this.$.MainPane.selectViewByName("CodeView");
@@ -390,6 +395,24 @@ enyo.kind({
 });
 
 enyo.kind({
+	name: "StatusView",
+	kind: enyo.VFlexBox,
+	events: {
+		"onMessagingView": "",
+	},
+	components: [
+		{ name: "setStatus", kind: "PalmService", service: "palm://com.ericblade.whazaa.service/", method: "setCustomStatus", onSuccess: "statusSuccess", onFailure: "statusFailure" },
+		{ content: "Enter new status message" },
+		{ name: "StatusInput", kind: "Input", hint: "Status" },
+		{ kind: "Button", caption: "Submit Update", onclick: "updateStatus" },
+	],
+	updateStatus: function(inSender, inEvent) {
+		this.$.setStatus.call({ status: this.$.StatusInput.getValue() });
+		this.doMessagingView();
+	}
+});
+
+enyo.kind({
 	//name: "Synergy",
 	name: "MessagingView",
 	kind: enyo.VFlexBox,
@@ -403,6 +426,12 @@ enyo.kind({
 			[
 				{ content: "Server says we are not authorized. Most likely you have signed in on another device. You will need to re-register this device to use it again." },
 				{ kind: "Button", caption: "Ok", onclick: "closeAuthPopup" },
+			]
+		},
+		{ name: "ConnectionReplacedPopup", kind: "Popup", components:
+			[
+				{ content: "Server says our connection has been taken over by another device. We are no longer connected. If you did not login from another location, you may have been hacked."},
+				{ kind: "Button", caption: "Ok", onclick: "closeConnectionReplacedPopup" },
 			]
 		},
 		{ kind: "Button", caption: "Subscribe To Service", onclick: "startService" },
@@ -424,6 +453,9 @@ enyo.kind({
 			]
 		},
 	],
+	closeConnectionReplacedPopup: function() {
+		this.$.ConnectionReplacedPopup.close();
+	},
 	closeAuthPopup: function() {
 		this.$.NotAuthPopup.close();
 	},
@@ -526,7 +558,7 @@ enyo.kind({
 			})
 		}
 		if(y.loggedin) {
-			this.log("***** App detects login! Spamming contact requests.");
+			/*this.log("***** App detects login! Spamming contact requests.");
 			if(enyo.application.contacts && enyo.application.contacts.length) {
 				for(var i = 0; i < enyo.application.contacts.length; i++) {
 					var contact = enyo.application.contacts[i];
@@ -542,12 +574,27 @@ enyo.kind({
 						}
 					}
 				}
-			}
+			}*/
 		}
 		if(y.queryLast) {
 			this.messages.push({
 				from: y.from,
 				text: y.from + " was last seen " + y.seconds + " seconds ago.",
+			});
+		}
+		// TODO: these returnValue false, why don't they go to the Failure code?
+		if(y.notAuthorized) {
+			this.doCodeView();
+			enyo.nextTick(this.$.NotAuthPopup, this.$.NotAuthPopup.openAtCenter);
+			//this.$.NotAuthPopup.openAtCenter();
+		}
+		if(y.connectionReplaced) {
+			this.$.ConnectionReplacedPopup.openAtCenter();
+		}
+		if(y.media) {
+			this.messages.push({
+				from: y.from,
+				text: "MEDIA RECEIVED: " + JSON.stringify(y),
 			});
 		}
 	},
@@ -556,6 +603,9 @@ enyo.kind({
 		if(y.notAuthorized) {
 			this.$.NotAuthPopup.openAtCenter();
 			this.doCodeView();
+		}
+		if(y.connectionReplaced) {
+			this.$.ConnectionReplacedPopup.openAtCenter();
 		}
 	},
 	setupMessages: function(inSender, inRow) {

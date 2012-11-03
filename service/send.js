@@ -8,7 +8,7 @@ var servicePath = fs.realpathSync('.');
 var modulePath = servicePath + '/node_modules';
 var waApi = require(modulePath+"/testapi.js").waApi;
 
-var wa = new waApi("19519993267", "134529771563", { debug: true });
+var wa = new waApi("phonenumber", "password", { debug: true });
 
 wa.addListener('loggedin', function() {
     wa.sendMessageWithBody({ content: "Test Message 1" });    

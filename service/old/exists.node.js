@@ -5,10 +5,10 @@ var https = require('https');
 var options = {
     host: "r.whatsapp.net",
     port: 443,
-    path: "/v1/exist.php?cc=1&in=9519993267&udid=134529771563",
+    path: "/v1/exist.php?cc=1&in=19519993267&udid=2baff2e60318eb53fad812612eac4241",
     method: "GET",
     headers: {
-        "User-Agent": "WhatsApp/2.6.61 S60Version/5.2 Device/C7-00",
+        "User-Agent": "WhatsApp/2.8.0 WP7/7.10.7720 Device/Nokia-Lumia_900-1.0",
         "Content-Type": "application/x-www-form-urlencoded",
         "Accept": "text/xml"
     }
