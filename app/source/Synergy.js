@@ -1,5 +1,3 @@
-// 31649703747@s.whatsapp.net "promised" money for whatsapp for veer. :) how much?
-
 /*
  normal message:
  <message from="17079925233@s.whatsapp.net" id="1345326759-13" type="chat" t="1345330448">
