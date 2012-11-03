@@ -20,3 +20,8 @@ http://lowlevel-studios.com/whatsapp-protocol-1-2-a-brief-explanation
 https://github.com/venomous0x/WhatsAPI/issues/126
 
 
+Note that there is quite probably a lot of completely dead code in this repository. I've tried to clean up some of it
+but during it's development, there were several significant re-writes of code, and some of the older stuff probably
+still remains.  If you make changes, and they don't seem to be doing anything, you may want to verify that the code
+you're working in is still live.  Please submit changes to remove dead code.
+
