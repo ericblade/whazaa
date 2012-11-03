@@ -252,21 +252,12 @@ enyo.kind({
 	name: "CodeView",
 	kind: enyo.VFlexBox,
 	components: [
-		//{ name: "GetCode", kind: "WebService", method: "GET", url: "https://r.whatsapp.net/v1/code.php", onSuccess: "codeSuccess", onFailure: "codeFailure" },
 		{ name: "GetCode", kind: "PalmService", service: "palm://com.ericblade.whazaa.service/", method: "getRegistrationCode", onSuccess: "codeSuccess", onFailure: "codeFailure" },
 		{ name: "ErrorBox", content: "" },
-		//{ kind: "HFlexBox", components:
-		//	[
 				{ content: "Country Code (1 for US)" },
 				{ name: "ccInput", kind: "Input", hint: "Country Code", value: "1", alwaysLookFocused: true },
-		//	]
-		//},
-		//{ kind: "HFlexBox", components:
-		//	[
 				{ content: "Phone Number" },
 				{ name: "phoneInput", kind: "Input", hint: "Phone Number", alwaysLookFocused: true },
-		//	]
-		//},
 		{ kind: "Button", caption: "Get Code", onclick: "getCode" },
 		{ content: "Tapping Get Code will cause WhatsApp to send a 3 digit code to that phone number via SMS. Enter that code on the next screen. If you do not receive a code, wait 60 seconds before trying again. If the device with that phone number already has WhatsApp, that device will need to re-register to use it again."},
 		{ kind: "Button", caption: "I already have a code", onclick: "alreadyHaveCode"},
@@ -329,21 +320,12 @@ enyo.kind({
 		"onRegisterSuccess": "",
 	},
 	components: [
-		//{ name: "Register", kind: "WebService", method: "GET", url: "https://r.whatsapp.net/v1/register.php", onSuccess: "registerSuccess", onFailure: "registerFailure" },
 		{ name: "Register", kind: "PalmService", service: "palm://com.ericblade.whazaa.service/", method: "registerCode", onSuccess: "registerSuccess", onFailure: "registerFailure" },
 		{ name: "ErrorBox", content: "" },
-		//{ kind: "HFlexBox", components:
-		//	[
 				{ content: "Enter Code" },
 				{ name: "codeInput", kind: "Input", hint: "Code", alwaysLookFocused: true },
-		//	]
-		//},
-		//{ kind: "HFlexBox", components:
-		//	[
 				{ content: "Your Name (for people who don't have you in their contacts)" },
 				{ name: "nameInput", kind: "Input", hint: "Your Name", alwaysLookFocused: true },
-		//	]
-		//},
 		{ kind: "Button", caption: "Register Code", onclick: "register" },
 		{ content: "Enter the 3-digit code you received via SMS, and your device will be registered to the service." },		
 	],
@@ -411,7 +393,6 @@ enyo.kind({
 });
 
 enyo.kind({
-	//name: "Synergy",
 	name: "MessagingView",
 	kind: enyo.VFlexBox,
 	events: {
@@ -433,14 +414,9 @@ enyo.kind({
 			]
 		},
 		{ kind: "Button", caption: "Subscribe To Service", onclick: "startService" },
-		//{ kind: "HFlexBox", components:
-		//	[
 				{ name: "RecpInput", kind: "Input", hint: "To" },
 				{ name: "MessageInput", kind: "Input", hint: "Enter Message", flex: 1, },
 				{ kind: "Button", caption: "Send", onclick: "sendMessage" },
-		//	]
-		//},
-		//{ kind: "Button", caption: "Send Server Ping", onclick: "sendPing" },
 		{ name: "scroller", kind: "FadeScroller", flex: 1, components:
 			[
 				{ name: "MessageRepeater", kind: "VirtualRepeater", onSetupRow: "setupMessages", onclick: "messageTap", components:
@@ -483,8 +459,6 @@ enyo.kind({
 	},
 	startService: function(inSender, inEvent) {
 		this.log(inSender, inEvent);
-		//this.$.start.call({ }, { method: "checkCredentials" });
-		//this.$.start.call({ userId: "19519993267", password: "134529771563", accountId: localStorage["synergyAccount"] });
 		this.$.start.call({ userId: localStorage["waAccountId"], password: localStorage["waPassword"], accountId: localStorage["synergyAccount"],
 						  displayName: localStorage["waName"] });
 	},
@@ -584,7 +558,6 @@ enyo.kind({
 		if(y.notAuthorized) {
 			this.doCodeView();
 			enyo.nextTick(this.$.NotAuthPopup, this.$.NotAuthPopup.openAtCenter);
-			//this.$.NotAuthPopup.openAtCenter();
 		}
 		if(y.connectionReplaced) {
 			this.$.ConnectionReplacedPopup.openAtCenter();
@@ -617,131 +590,3 @@ enyo.kind({
 	}
 });
 
-/*
-enyo.kind({
-	name: "Synergy",
-	kind: enyo.VFlexBox,
-
-	components: [
-		{ name: "credService", kind: "PalmService", service: "palm://com.ericblade.synergy.service/", method: "checkCredentials", onSuccess: "credSuccess", onFailure: "credFailure" },
-		{ name: "syncService", kind: "PalmService", service: "palm://com.ericblade.synergy.service/", method: "sync", onSuccess: "syncSuccess", onFailure: "syncFailure" },
-		{ name: "createAccount", kind: "PalmService", service: "palm://com.ericblade.synergy.service/", method: "onCreate", onSuccess: "createSuccess", onFailure: "createFailure" },
-		{ name: "disenableAccountCap", kind: "PalmService", service: "palm://com.ericblade.synergy.service/", method: "onEnabled", onSuccess: "enabledSuccess", onFailure: "enabledFailure" },
-		{ name: "deleteAccount", kind: "PalmService", service: "palm://com.ericblade.synergy.service/", method: "onDelete", onSuccess: "deletedSuccess", onFailure: "deletedFailure" },
-		{ name: "startActivity", kind: "PalmService", service: "palm://com.ericblade.synergy.service/", method: "startActivity", onSuccess: "startSuccess", onFailure: "startFailure" },
-		{ name: "adoptActivity", kind: "PalmService", service: "palm://com.ericblade.synergy.service/", method: "adoptActivity", onSuccess: "adoptSuccess", onFailure: "adoptFailure" },
-		{ name: "completeActivity", kind: "PalmService", service: "palm://com.ericblade.synergy.service/", method: "completeActivity", onSuccess: "completeSuccess", onFailure: "completeFailure" },
-		{kind: "PageHeader", components: [
-			{content: "Synegy Messaging Connector Test Panel"}
-		]},
-		{ name: "Results" },
-		{flex: 1, kind: "Pane", components: [
-			{flex: 1, kind: "Scroller", components: [
-				{ kind: "Group", label: "Service Calls", components: [
-					{ kind: "Group", label: "Credentials", components: [
-						{ content: "Username" },
-						{ name: "credUser", kind: "Input" },
-						{ content: "Password" },
-						{ name: "credPass", kind: "Input" },
-						{ kind: "Button", label: "Check Credentials", onclick: "checkCredentials" },
-					]}
-				]},
-				{ kind: "Group", label: "Accounts", components: [
-					{ content: "For the time being, create and remove accounts and enable capabilities from the Settings->Accounts app" },
-					{ content: "These buttons just test the functions called in the service." },
-					{ kind: "Button", label: "onCreate", onclick: "callCreate" },
-					{ kind: "Button", label: "onEnabled (enabled)", onclick: "callEnabled" },
-					{ kind: "Button", label: "onEnabled (disabled)", onclick: "callDisabled" },
-					{ kind: "Button", label: "onDelete", onclick: "callDelete" },
-				]},
-				{ kind: "Group", label: "Misc", components: [
-					{ kind: "Button", label: "Sync", onclick: "sync" },
-					{ kind: "Button", label: "startActivity", onclick: "startActivity" },
-					{ kind: "Button", label: "adoptActivity", onclick: "adoptActivity" },
-					{ kind: "Button", label: "completeActivity", onclick: "completeActivity" },
-				]}
-			]}
-		]},
-	],
-	// TODO: These should call these test functions with some useful parameters..
-	startActivity: function(inSender, inEvent) { this.$.startActivity.call({ }); },
-	adoptActivity: function(inSender, inEvent) { this.$.adoptActivity.call({ }); },
-	completeActivity: function(inSender, inEvent) { this.$.completeActivity.call({ }); },
-	callCreate: function(inSender, inEvent) { this.$.createAccount.call({ }); },
-	callEnabled: function(inSender, inEvent) { this.$.disenableAccountCap.call({ enabled: true }); },
-	callDisabled: function(inSender, inEvent) { this.$.disenableAccountCap.call({ enabled: false }); },
-	callDelete: function(inSender, inEvent) { this.$.deleteAccount.call({ }); },
-	startSuccess: function(inSender, inResponse, inRequest) {
-		this.log(inSender, inResponse, inRequest);
-		this.$.Results.setContent(JSON.stringify(inResponse));
-	},
-	stopFailure: function(inSender, inError, inRequest) {
-		this.log(inSender, inError, inRequest);
-		this.$.Results.setContent(JSON.stringify(inError));
-	},
-	adoptSuccess: function(inSender, inResponse, inRequest) {
-		this.log(inSender, inResponse, inRequest);
-		this.$.Results.setContent(JSON.stringify(inResponse));
-	},
-	adoptFailure: function(inSender, inError, inRequest) {
-		this.log(inSender, inError, inRequest);
-		this.$.Results.setContent(JSON.stringify(inError));
-	},	
-	completeSuccess: function(inSender, inResponse, inRequest) {
-		this.log(inSender, inResponse, inRequest);
-		this.$.Results.setContent(JSON.stringify(inResponse));
-	},
-	completeFailure: function(inSender, inError, inRequest) {
-		this.log(inSender, inError, inRequest);
-		this.$.Results.setContent(JSON.stringify(inError));
-	},	
-	credSuccess: function(inSender, inResponse, inRequest) {
-		this.log(inSender, inResponse, inRequest);
-		this.$.Results.setContent(JSON.stringify(inResponse));
-	},
-	credFailure: function(inSender, inError, inRequest) {
-		this.log(inSender, inError, inRequest);
-		this.$.Results.setContent(JSON.stringify(inError));
-	},
-	enabledSuccess: function(inSender, inResponse, inRequest) {
-		this.log(inSender, inResponse, inRequest);
-		this.$.Results.setContent(JSON.stringify(inResponse));
-	},
-	enabledFailure: function(inSender, inError, inRequest) {
-		this.log(inSender, inError, inRequest);
-		this.$.Results.setContent(JSON.stringify(inError));
-	},
-	createSuccess: function(inSender, inResponse, inRequest) {
-		this.log(inSender, inResponse, inRequest);
-		this.$.Results.setContent(JSON.stringify(inResponse));
-	},
-	createFailure: function(inSender, inError, inRequest) {
-		this.log(inSender, inError, inRequest);
-		this.$.Results.setContent(JSON.stringify(inError));
-	},
-	deleteSuccess: function(inSender, inResponse, inRequest) {
-		this.log(inSender, inResponse, inRequest);
-		this.$.Results.setContent(JSON.stringify(inResponse));
-	},
-	deleteFailure: function(inSender, inError, inRequest) {
-		this.log(inSender, inError, inRequest);
-		this.$.Results.setContent(JSON.stringify(inError));
-	},
-	syncSuccess: function(inSender, inResponse, inRequest) {
-		this.log(inSender, inResponse, inRequest);
-		this.$.Results.setContent(JSON.stringify(inResponse));
-	},
-	syncFailure: function(inSender, inError, inRequest) {
-		this.log(inSender, inError, inRequest);
-		this.$.Results.setContent(JSON.stringify(inError));
-	},
-	checkCredentials: function(inSender, inEvent) {
-		this.log("checking credentials");
-		var params = { username: this.$.credUser.getValue(), password: this.$.credPass.getValue() };
-		this.$.credService.call(params);
-	},
-	sync: function(inSender, inEvent) {
-		this.$.syncService.call({ });
-	}
-});
-*/
